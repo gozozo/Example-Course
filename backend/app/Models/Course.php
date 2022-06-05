@@ -13,7 +13,11 @@ class Course extends Model
      * Relationships
      */
 
-     public function students (){
-         return $this->belongsToMany(Student::class, 'courses_students');
-     }
+    public function instructor (){
+        return $this->belongsTo(Instructor::class);
+    }
+
+    public function students (){
+        return $this->belongsToMany(Student::class, 'courses_students');
+    }
 }

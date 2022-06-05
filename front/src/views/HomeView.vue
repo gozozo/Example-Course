@@ -11,10 +11,14 @@
 
     <table class="table table-striped mt-5">
       <thead>
-       <c-thead :columns="columns" :with-action="withAction"></c-thead>
+       <c-thead :columns="['Id','First Name','Last Name','Email']" :with-action="true"></c-thead>
       </thead>
       <tbody>
-        <c-tr v-if="this.instructors.length > 0" :objects="instructors"  :with-action="withAction" :title-action="'View'" :route="'/instructor/'"></c-tr>
+        <c-tr v-if="this.instructors.length > 0" 
+        :objects="instructors"
+        :action="'button'" 
+        :title-action="'View'" 
+        :route="'/instructor/'"></c-tr>
       </tbody>
     </table>
     <c-status :state="this.state" :show="this.showStatusView" :errorMessage="this.errorMessage"></c-status>
@@ -33,8 +37,6 @@ export default {
   name: "HomeView",
   data : function () {
       return {
-        columns:["Id","First Name","Last Name","Email"],
-        withAction:true,
         instructors:[],
         state: "init",
         errorMessage: ""

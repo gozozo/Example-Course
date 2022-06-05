@@ -11,14 +11,15 @@
     
      <table class="table table-striped mt-5">
       <thead>
-       <c-thead :columns="columns" :with-action="withAction"></c-thead>
+       <c-thead :columns="['Id','Name','Description']" :with-action="true"/>
       </thead>
       <tbody>
         <c-tr v-if="this.instructor.courses.length > 0" 
           :objects="instructor.courses"  
-          :with-action="withAction"
+          :with-action="true"
+          :action="'checkbox'"
           :title-action="'Roster'"
-          :exclude="exclude" 
+          :exclude="['instructor_id']" 
           :route="getRoute">
         </c-tr>
       </tbody>
@@ -47,14 +48,10 @@ import InstruictorWS from '@/ws/InstructorWS';
 export default {
   name: "InstructorView",
   data : function () {
-    
       return {
-        columns:["Id","Name","Description"],
-        withAction:true,
         instructor:null,
         state: "init",
         errorMessage: "",
-        exclude:['instructor_id']
       }
   },
   components: {
@@ -80,14 +77,13 @@ export default {
     * Build resource route
     */
     getRoute: function(){
-      return '/instructor/'+this.$route.params.id+'/couser/';
+      return '/couser/';
     }
   },
   mounted : function () {
-    InstruictorWS.show(this.$route.params.id).then(response => {
-        this.instructor = response.data.data
-        this.state='result'
-        console.log(this.instructors)
+    InstruictorWS.show(this.$route.params.instructor_id).then(response => {
+      this.instructor = response.data.data
+      this.state='result'
     }).catch(error => {
       this.errorMessage = error.message;
       this.state='error';

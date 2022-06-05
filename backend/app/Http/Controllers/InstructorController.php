@@ -8,7 +8,6 @@ use App\Http\Resources\InstructorResource;
 use App\Models\Instructor;
 
 
-
 class InstructorController extends Controller
 {
     /**
@@ -27,8 +26,8 @@ class InstructorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Instructor $instructor)
     {
-        return new InstructorResource(Instructor::findOrFail($id)->load('courses:id,name,description,instructor_id'));
+        return new InstructorResource($instructor->load('courses:id,name,description,instructor_id'));
     }
 }

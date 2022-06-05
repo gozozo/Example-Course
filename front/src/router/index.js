@@ -8,12 +8,20 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/instructor/:id",
+    path: "/instructor/:instructor_id",
     name: "instructor",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/InstructorView.vue"),
+  },
+  {
+    path: "/couser/:course_id",
+    name: "course",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/CourseView.vue"),
   },
 ];
 
