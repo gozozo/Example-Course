@@ -18,6 +18,17 @@ class InstructorController extends Controller
      */
     public function index()
     {
-        return InstructorResource::collection(Instructor::all()->load('courses'));
+        return InstructorResource::collection(Instructor::select(['id','first_name','last_name','email'])->get());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return new InstructorResource(Instructor::findOrFail($id)->load('courses:id,name,description,instructor_id'));
     }
 }

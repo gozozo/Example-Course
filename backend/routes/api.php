@@ -20,5 +20,5 @@ use App\Http\Controllers\InstructorCourseController;
 
 
 Route::prefix('v1')->group(function (){
-    Route::resource('instructor', InstructorController::class)->only(['index']);
+    Route::resource('instructor', InstructorController::class)->only(['index','show']);
 });
