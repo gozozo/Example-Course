@@ -4,7 +4,7 @@
         <td v-if="this.action != null && this.action == 'button' "><a v-bind:href= "this.route + objects[index].id" class="btn btn-primary btn-sm">{{this.titleAction}}</a></td>
         <td v-if="this.action != null && this.action == 'checkbox' ">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" :checked="isHere(index)" v-on:change="attendancesEvent(objects[index],$event)">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" :checked="isHere(index)" v-on:change="attendancesEvent(objects[index],this.extra,$event)">
             <label class="form-check-label" for="flexSwitchCheckChecked"></label>
           </div>
         </td>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import AttendanceWS from '@/ws/AttendanceWS';
+
 export default {
   name:'CTr',
   props:{
@@ -19,7 +21,8 @@ export default {
       action:String,
       route:String,
       exclude:Array,
-      titleAction:String
+      titleAction:String,
+      extra:Object
   },
   methods:{
     /**
@@ -28,20 +31,28 @@ export default {
     * @param {Object} object The object to be removed properties
     */
       removeProperties: function (object){
+          let tmp = JSON.parse(JSON.stringify(object))
           if( this.exclude !=  undefined){
             this.exclude.forEach(element => {
-              delete object[element]
+              delete tmp[element]
             });
           }
-          return object;
+          return tmp;
       }, 
       isHere: function (index){
-        console.log((this.objects[index].attendances != undefined && this.objects[index].attendances.length > 0));
         return (this.objects[index].attendances != undefined && this.objects[index].attendances.length > 0);
       },
-      attendancesEvent(student,e){
-          console.log(student)
-          console.log(e)
+      attendancesEvent(student,extra){
+          if(student.attendances==undefined||student.attendances.length==0){
+            AttendanceWS.store({student_id:student.id,course_id:extra.id}).then(response => {
+              student.attendances.push(response.data.data);
+              console.log(student)
+            });
+          }else if(student.attendances.length>0){
+            AttendanceWS.delete(student.attendances[0].id).then(function(){
+              student.attendances = [];
+            });
+          }
       }
   }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,5 @@ use App\Http\Controllers\CourseController;
 Route::prefix('v1')->group(function (){
     Route::resource('instructor', InstructorController::class)->only(['index','show']);
     Route::resource('course', CourseController::class)->only(['show']);
+    Route::resource('attendance', AttendanceController::class)->only(['store','destroy']);
 });

@@ -17,7 +17,7 @@
         <c-tr v-if="this.instructor.courses.length > 0" 
           :objects="instructor.courses"  
           :with-action="true"
-          :action="'checkbox'"
+          :action="'button'"
           :title-action="'Roster'"
           :exclude="['instructor_id']" 
           :route="getRoute">

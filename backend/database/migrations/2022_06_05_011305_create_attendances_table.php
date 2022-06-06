@@ -16,11 +16,11 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
 
             $table->id();
-            $table->unsignedBigInteger('couser_id');
+            $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('student_id');
             $table->timestamps();
             
-            $table->foreign('couser_id')->references('id')->on('courses');
+            $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('student_id')->references('id')->on('students');
         });
     }

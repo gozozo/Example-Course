@@ -20,7 +20,8 @@
           :objects="this.course.students"  
           :action="'checkbox'"
           :title-action="'Roster'"
-          :exclude="['pivot']" 
+          :exclude="['pivot','attendances']" 
+          :extra="this.course"
         />
       </tbody>
     </table>
